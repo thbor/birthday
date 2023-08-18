@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "htt`://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>生日快乐!</title>
+</head>
+<body>
+<!--<audio src="music/love.mp3" loop="loop" controls="controls" autoplay="autoplay"></audio>-->
+<audio preload autoplay loop id="music/love.mp3">
+    <source src="music/love.mp3" type="audio/mpeg">
+</audio>
+
+
+<script>
+    window.onload = function(){
+        setInterval("toggleSound()",100);
+    }
+
+    function toggleSound() {
+        var music = document.getElementById("music/love.mp3");//获取ID
+
+        if (music.paused) { //判读是否播放
+            music.paused=false;
+            music.play(); //没有就播放
+        }
+    }
+
+
+    // const audio = new Audio('music/love.mp3');
+    // console.log('audio',audio)
+    // audio.play();
+</script>
+
+</body>
+</html>

@@ -1,7 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "htt`://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>生日快乐!</title>
     <link type="text/css" rel="stylesheet" href="./css/default.css">
     <script type="text/javascript" src="./css/jquery.min.js"></script>
@@ -13,224 +11,373 @@
     <script type="text/javascript" src="./css/jscex-async-powerpack.min.js"></script>
     <script type="text/javascript" src="./css/functions.js" charset="utf-8"></script>
     <script type="text/javascript" src="./css/love.js" charset="utf-8"></script>
-    <style type="text/css">
-        <!--
-        .STYLE1 {
-            color: #666666
-        }
-
-        -->
-    </style>
 </head>
 <body>
 <audio preload autoplay loop id="music/love.mp3">
     <source src="music/love.mp3" type="audio/mpeg">
 </audio>
+<style>
+    body {
+        /*background: #222;*/
+        overflow: hidden;
+        /* 取消选中 */
+        user-select: none;
 
-<div id="main">
-    <div id="wrap">
-        <div id="text">
-            <div id="code">
-                <font color="#FF0000">
-                    <span class="say"><h1>郭老师，提前一天祝你生日快乐呀~</h1></span><br><br>
-                    <span class="say">很开心能认识你</span><br> <br>
-                    <span class="say">对待笨笨的我，你很有耐心的教我做饭</span><br><br>
-                    <span class="say">在我眼里</span><br><br>
-                    <span class="say">虽然还没见面、脑子里面出现的画面就是这样</span><br><br>
-                    <span class="say">长的高、有文化、爱学习、脑子聪明、还很有责任心</span><br><br>
-                    <span class="say">总是包容我的各种缺点、还哄我开心、谢谢你陪着我（づ￣3￣）づ╭～</span><br><br>
-                    <span class="say"><span class="space"></span> -- 郭老师-- </span><br>
-                    <span class="say"><h1>生日快乐!</h1></span><br>
-                </font>
-            </div>
-        </div>
-        <div id="clock-box">
-            <!-- <span class="STYLE1"></span><font color="#33CC00">距离我喜欢你，</font>
-<span class="STYLE1">已经是……</span> -->
-            <span class="STYLE1"></span>
-            <font color="#33CC00"></font>
-            <span class="STYLE1"></span>
-            <!-- <div id="clock"></div> -->
-        </div>
-        <canvas id="canvas" width="1100" height="680"></canvas>
-    </div>
+    }
+    .hp:hover{
+        font-size: 28px;
+    }
 
+    @keyframes rotate {
+        100% {
+            transform: rotateY(360deg);
+        }
+    }
+
+    .perspective {
+        /*子元素透视 场景深度*/
+        perspective: 300px;
+    }
+
+    .wrap {
+        visibility: hidden;
+        /* 3d */
+        width: 135px;
+        height: 240px;
+        margin: 100px auto;
+        position: relative;
+        /* border: 1px solid red; */
+        transform: rotateX(-20deg) rotateY(0deg);
+        transform-style: preserve-3d;
+
+    }
+
+    .wrap img {
+        display: block;
+        /* 绝对定位 */
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        transform: rotateY(0deg) translateZ(0px);
+        background: transparent;
+        box-shadow: 0 0 4px #fff;
+        border-radius: 5px;
+
+        /* webkit */
+    }
+
+    /* 照片底座 */
+    .wrap p {
+        width: 1200px;
+        height: 1200px;
+        background: -webkit-radial-gradient(center center, 600px 600px, rgba(122, 122, 122, .5), rgba(0, 0, 0, 0));
+        position: absolute;
+        border-radius: 50%;
+        left: 50%;
+        top: 100%;
+        margin-left: -600px;
+        margin-top: -600px;
+        /* 沿着x轴按倒 */
+        transform: rotateX(90deg);
+
+    }
+    .bixin{
+        opacity: 0;
+        /*visibility: hidden;*/
+    }
+    .bless-box{
+        visibility: hidden;
+    }
+    .envelope-box{
+        visibility: hidden;
+    }
+    .envelope {
+        width: 300px;
+        height: 150px;
+        background: #ae4243;
+        position: relative;
+    }
+    .envelope_top {
+        border-bottom: 100px solid #ae4243;
+        border-left: 110px solid transparent;
+        border-right: 110px solid transparent;
+        height: 0;
+        width: 80px;
+        position: absolute;
+        transform: translateY(-100%);
+        transform-origin: bottom;
+        transition: .3s;
+        z-index: 3;
+    }
+    .envelope_body {
+        position: relative;
+    }
+    .envelope_body_front {
+        width: 300px;
+        height: 75px;
+        background: #ff6b6b;
+        position: absolute;
+        z-index: 2;
+        transform: translateY(100%);
+    }
+    .envelope_body_left {
+        width: 0;
+        height: 0;
+        border-top: 75px solid transparent;
+        border-left: 110px solid #ee5253;
+        border-bottom: 75px solid transparent;
+        z-index: 3;
+        position: relative;
+    }
+    .envelope_body_right {
+        float: right;
+        width: 0;
+        height: 0;
+        border-top: 75px solid transparent;
+        border-right: 110px solid #ee5253;
+        border-bottom: 75px solid transparent;
+        transform: translateY(-100%);
+        z-index: 3;
+        position: relative;
+    }
+    .paper {
+        background: #fff;
+        width: 260px;
+        height: 100px;
+        position: absolute;
+        left: 50%;
+        margin-left: -135px;
+        margin-top: -60px;
+        text-align: center;
+        padding: 5px;
+        line-height: 4em;
+        font-size: 1.5em;
+        z-index: 3;
+        transition: .2s;
+    }
+    .envelope_top_close {
+        transform: translateY(-100%) rotateX(180deg);
+        border-bottom: 100px solid #ef5b5b;
+        z-index: 4;
+    }
+    .paper_close {
+        margin-top: 0;
+        z-index: 2;
+    }
+
+</style>
+
+<!--<div>开篇爱心特效</div>-->
+<div class="love-box">
+    <img src="imgs/比心.png" class="bixin"/>
 </div>
 
-<script>
-</script>
+<div class="envelope-box" onclick="showBless()">
+    <div class="envelope">
+        <div class="envelope_top"></div>
+        <div class="envelope_body">
+            <div class="paper">
+                <span class="hp">Happy Birthday!</span>
+            </div>
+            <div class="envelope_body_front"></div>
+            <div class="envelope_body_left"></div>
+            <div class="envelope_body_right"></div>
+        </div>
+    </div>
+</div>
+
+
+<!--<div>照片墙记录教我做黑暗料理得日子</div>-->
+<div class="bless-box">
+    <font color="#FF0000">
+        <span class="say"><h1>郭老师，提前一天祝你生日快乐呀~</h1></span><br><br>
+        <span class="say">很开心能认识你</span><br> <br>
+        <span class="say">对待笨笨的我，你很有耐心的教我做饭</span><br><br>
+        <span class="say">在我眼里</span><br><br>
+        <span class="say">虽然还没见面、脑子里面出现的画面就是这样</span><br><br>
+        <span class="say">长的高、有文化、爱学习、脑子聪明、还很有责任心</span><br><br>
+        <span class="say">总是包容我的各种缺点、还哄我开心、谢谢你陪着我（づ￣3￣）づ╭～</span><br><br>
+        <span class="say"><span class="space"></span> -- form 郭老师的小胖墩 -- </span><br>
+        <span class="say"><h1>生日快乐!</h1></span><br>
+    </font>
+</div>
+
+<!--<div class="perspective">-->
+
+<!--    <div class="wrap" id="imgwrap">-->
+<!--        &lt;!&ndash; 引入图片值页面 &ndash;&gt;-->
+<!--        <img class="f1" src="imgs/丝瓜豆腐.jpg" />-->
+<!--        <img class="f1" src="imgs/炒青菜.jpg" />-->
+<!--        <img class="f1" src="imgs/茄子炒牛肉.jpg" />-->
+<!--        <img class="f1" src="imgs/香菇炖鸡.jpg" />-->
+<!--        <img class="f1" src="imgs/黑料料理1.jpg" />-->
+<!--        <p></p>-->
+<!--    </div>-->
+
+<!--</div>-->
+
+<!--<div>祝福</div>-->
+
+
+<!--<div>音乐换一首</div>-->
 
 <script>
+    function showDom(selector,styles){
+        const foodImgDom = document.querySelector(selector);
+        if(foodImgDom){
+            foodImgDom.style.visibility = 'visible';
+        }
+        return foodImgDom;
+    }
+    // showImgs();
 
-    window.onload = function () {
-        setInterval("toggleSound()", 100);
+    // showBless();
+    var runAsync = eval(Jscex.compile("async", function () {
+        $await(showSendLove());
+        // $await(showImgs())
+    }));
+
+    runAsync().start();
+
+
+
+    // 1.爱心发射
+    function showSendLove(){
+        const showPerson = new Promise((resolve)=>{
+            let opacity = 0;
+            setTimeout(()=>{
+                const bixin = document.querySelector('.bixin')
+                opacity=1;
+                bixin.style.opacity = opacity;
+                resolve(bixin)
+            },100)})
+        showPerson.then(()=>{
+            sendLove()
+        })
+    }
+    async function sendLove(){
+        const loveBox = document.querySelector('.love-box')
+        let count = 0;
+        const maxLoveCount = 30;
+        const mailCount = maxLoveCount
+        return new Promise((resolve)=>resolve(
+            window.setInterval(()=>{
+                if(loveBox && count <= maxLoveCount ){
+                    const loveDom = document.createElement('img');
+                    loveDom.src='imgs/love.png'
+                    loveDom.style.position = 'relative';
+                    loveDom.style.left = `${Math.random()*100}px`;
+                    loveDom.style.top = `${Math.random()*100}px`;
+                    loveDom.style.transform = `rotate(${Math.random()*100}deg)`;
+                    loveBox.appendChild(loveDom)
+                    count+=1;
+                    if(count===mailCount){
+                        // alert('信封')
+                        setTimeout(()=>{
+                            const dom = showDom('.envelope-box')
+                            dom.style.cursor = 'pointer';
+                            dom.style.position = 'absolute';
+                            dom.style.left = '40vw'
+
+                        },500)
+
+
+                    }
+                    console.log('count=',count)
+                }
+
+            },80)
+        ))
+
+
+    }
+    // 2.料理照片墙
+    function showImgs(){
+        showDom('.wrap')
+        var oImg = document.getElementsByClassName('f1')
+        // var oImg2 = document.getElementsByClassName('f2')
+        // var oImg3 = document.getElementsByClassName('f3')
+        var len = oImg.length;
+        console.log(len)
+        var deg = 360 / len;
+
+        var oWrap = document.getElementById("imgwrap");
+
+        //页面加载完毕在执行的代码
+        window.onload = function () {
+            Array.prototype.forEach.call(oImg, function (ele, index, self) {
+                // 旋转并沿Z轴平移
+                ele.style.transform = "rotateY(" + deg * index + "deg) translateZ(150.75px)";
+                //过渡时间1s
+                ele.style.transition = "1s " + (len - index) * 0.1 + "s";
+
+            });
+        }
+        //翻动3D相册
+        var newX, newY, lastX, lastY, minusX, minusY, rotX = -20, rotY = 0;
+
+        document.onmousedown = function (e) {
+            // 点击设置初值
+            lastX = e.clientX;
+            lastY = e.clientY;
+
+            this.onmousemove = function (e) {
+                newX = e.clientX;
+                newY = e.clientY;
+                minusX = newX - lastX;
+                minusY = newY - lastY;
+
+                rotX -= minusY * 0.2;
+                rotY += minusX * 0.1;
+                oWrap.style.transform = "rotateX(" + rotX + "deg) rotateY(" + rotY + "deg)";
+                lastX = newX;
+                lastY = newY;
+
+            }
+            this.onmouseup = function (e) {
+                //鼠标松开
+                this.onmousemove = null;//清除鼠标移动
+            }
+        }
+    }
+    // 3.祝福
+    function hiddenDom(selector){
+        const foodImgDom = document.querySelector(selector);
+        if(foodImgDom){
+            foodImgDom.style.visibility = 'hidden';
+        }
+        return foodImgDom;
+    }
+    function showBless(){
+        showImgs()
+        hiddenDom('.love-box')
+        hiddenDom('.envelope-box')
+        const blessDom = showDom('.bless-box')
+        blessDom.style.position = 'absolute'
+        blessDom.style.top = 0
+        blessDom.style.left = '10vw'
+        $(".bless-box").show().typewriter();
+    }
+
+
+
+    window.onload = function(){
+        setInterval("toggleSound()",100);
     }
 
     function toggleSound() {
         var music = document.getElementById("music/love.mp3");//获取ID
 
         if (music.paused) { //判读是否播放
-            music.paused = false;
+            music.paused=false;
             music.play(); //没有就播放
         }
     }
 
-    (function () {
 
-        var canvas = $('#canvas');
-
-        if (!canvas[0].getContext) {
-            $("#error").show();
-            return false;
-        }
-
-        var width = canvas.width();
-        var height = canvas.height();
-        canvas.attr("width", width);
-        canvas.attr("height", height);
-        var opts = {
-            seed: {
-                x: width / 2 - 20,
-                color: "rgb(190, 26, 37)",
-                scale: 2
-            },
-            branch: [
-                [535, 680, 570, 250, 500, 200, 30, 100, [
-                    [540, 500, 455, 417, 340, 400, 13, 100, [
-                        [450, 435, 434, 430, 394, 395, 2, 40]
-                    ]],
-                    [550, 445, 600, 356, 680, 345, 12, 100, [
-                        [578, 400, 648, 409, 661, 426, 3, 80]
-                    ]],
-                    [539, 281, 537, 248, 534, 217, 3, 40],
-                    [546, 397, 413, 247, 328, 244, 9, 80, [
-                        [427, 286, 383, 253, 371, 205, 2, 40],
-                        [498, 345, 435, 315, 395, 330, 4, 60]
-                    ]],
-                    [546, 357, 608, 252, 678, 221, 6, 100, [
-                        [590, 293, 646, 277, 648, 271, 2, 80]
-                    ]]
-                ]]
-            ],
-            bloom: {
-                num: 700,
-                width: 1080,
-                height: 650,
-            },
-            footer: {
-                width: 1200,
-                height: 5,
-                speed: 10,
-            }
-        }
-
-        var tree = new Tree(canvas[0], width, height, opts);
-        var seed = tree.seed;
-        var foot = tree.footer;
-        var hold = 1;
-
-        canvas.click(function (e) {
-            var offset = canvas.offset(), x, y;
-            x = e.pageX - offset.left;
-            y = e.pageY - offset.top;
-            if (seed.hover(x, y)) {
-                hold = 0;
-                canvas.unbind("click");
-                canvas.unbind("mousemove");
-                canvas.removeClass('hand');
-            }
-        }).mousemove(function (e) {
-            var offset = canvas.offset(), x, y;
-            x = e.pageX - offset.left;
-            y = e.pageY - offset.top;
-            canvas.toggleClass('hand', seed.hover(x, y));
-        });
-
-        var seedAnimate = eval(Jscex.compile("async", function () {
-            seed.draw();
-            while (hold) {
-                $await(Jscex.Async.sleep(10));
-            }
-            while (seed.canScale()) {
-                seed.scale(0.95);
-                $await(Jscex.Async.sleep(10));
-            }
-            while (seed.canMove()) {
-                seed.move(0, 2);
-                foot.draw();
-                $await(Jscex.Async.sleep(10));
-            }
-        }));
-
-        var growAnimate = eval(Jscex.compile("async", function () {
-            do {
-                tree.grow();
-                $await(Jscex.Async.sleep(10));
-            } while (tree.canGrow());
-        }));
-
-        var flowAnimate = eval(Jscex.compile("async", function () {
-            do {
-                tree.flower(2);
-                $await(Jscex.Async.sleep(10));
-            } while (tree.canFlower());
-        }));
-
-        var moveAnimate = eval(Jscex.compile("async", function () {
-            tree.snapshot("p1", 240, 0, 610, 680);
-            while (tree.move("p1", 500, 0)) {
-                foot.draw();
-                $await(Jscex.Async.sleep(10));
-            }
-            foot.draw();
-            tree.snapshot("p2", 500, 0, 610, 680);
-
-            // 会有闪烁不得意这样做, (＞﹏＜)
-            canvas.parent().css("background", "url(" + tree.toDataURL('image/png') + ")");
-            canvas.css("background", "#ffe");
-            $await(Jscex.Async.sleep(300));
-            canvas.css("background", "none");
-        }));
-
-        var jumpAnimate = eval(Jscex.compile("async", function () {
-            var ctx = tree.ctx;
-            while (true) {
-                tree.ctx.clearRect(0, 0, width, height);
-                tree.jump();
-                foot.draw();
-                $await(Jscex.Async.sleep(25));
-            }
-        }));
-
-        var textAnimate = eval(Jscex.compile("async", function () {
-            var together = new Date();
-            together.setFullYear(2009, 10, 23);      //时间年月日
-            together.setHours(16);            //小时
-            together.setMinutes(53);          //分钟
-            together.setSeconds(0);         //秒前一位
-            together.setMilliseconds(2);        //秒第二位
-
-            $("#code").show().typewriter();
-            $("#clock-box").fadeIn(500);
-            while (true) {
-                timeElapse(together);
-                $await(Jscex.Async.sleep(1000));
-            }
-        }));
-
-        var runAsync = eval(Jscex.compile("async", function () {
-            $await(seedAnimate());
-            $await(growAnimate());
-            $await(flowAnimate());
-            $await(moveAnimate());
-
-            textAnimate().start();
-
-            $await(jumpAnimate());
-        }));
-
-        runAsync().start();
-    })();
+    const audio = new Audio('music/love.mp3');
+    console.log('audio',audio)
+    audio.play();
 </script>
 
 </body>
